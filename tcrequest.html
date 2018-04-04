@@ -1,0 +1,255 @@
+
+<!doctype html>	
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<style type="text/css">
+	.palel-primary
+	{
+		border-color: #bce8f1;
+	}
+	.panel-primary>.panel-heading
+	{
+		background:#bce8f1;
+		
+	}
+	.panel-primary>.panel-body
+	{
+		background-color: #EDEDED;
+	}
+	/* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	
+</style>
+
+<script type="text/javascript" >
+
+var obj, dbParam, xmlhttp;
+
+xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var myObj = JSON.parse(this.responseText,true)
+      
+	if ( typeof(myObj.name) !='undefined') {document.getElementById('name').value = myObj.name;
+	}if ( typeof(myObj.department) !='undefined') {document.getElementById('department').value = myObj.department;
+}if ( typeof(myObj.rollno) !='undefined') {document.getElementById('rollno').value = myObj.rollno;
+}if ( typeof(myObj.email) !='undefined') {document.getElementById('email').value = myObj.email;
+}if ( typeof(myObj.phone) !='undefined') {document.getElementById('phone').value = myObj.phone;
+}if ( typeof(myObj.guardianname) !='undefined') {document.getElementById('guardianname').value = myObj.guardianname;
+}if ( typeof(myObj.guardianrelation) !='undefined') {document.getElementById('guardianrelation').value = myObj.guardianrelation;
+}if ( typeof(myObj.religion) !='undefined') {document.getElementById('religion').value = myObj.religion;
+}if ( typeof(myObj.community) !='undefined') {document.getElementById('community').value = myObj.community;
+}if ( typeof(myObj.Nationality) !='undefined') {document.getElementById('Nationality').value = myObj.Nationality;
+}if ( typeof(myObj.dob) !='undefined') {document.getElementById('dob').valueAsDate =new Date(myObj.dob);
+}if ( typeof(myObj.b_promoted) !='undefined') {document.getElementById('b_promoted').value = myObj.b_promoted;
+}if ( typeof(myObj.reasonForLeaving) !='undefined') {document.getElementById('reasonForLeaving').value = myObj.reasonForLeaving;
+}if ( typeof(myObj.proceedinginstitute) !='undefined') {document.getElementById('proceedinginstitute').value = myObj.proceedinginstitute;
+}if ( typeof(myObj.yearOfStudy) !='undefined') {document.getElementById('yearOfStudy').value = myObj.yearOfStudy;
+}if ( typeof(myObj.lastenrolledClass) !='undefined') {document.getElementById('lastenrolledClass').value = myObj.lastenrolledClass;
+}if ( typeof(myObj.bFeeconcession) !='undefined') {document.getElementById('bFeeconcession').value = myObj.bFeeconcession;
+}
+if ( typeof(myObj.address) !='undefined') {document.getElementById('address').value = myObj.address;
+} 
+if ( typeof(myObj.workingDays) !='undefined') {document.getElementById('workingDays').value = myObj.workingDays;
+}
+if ( typeof(myObj.attendance) !='undefined') {document.getElementById('attendance').value = myObj.attendance;
+} 
+if ( typeof(myObj.lastAttendanceDate) !='undefined') {document.getElementById('lastAttendanceDate').value = myObj.lastAttendanceDate;
+}  
+        
+    }
+};
+
+
+$(document).ready(function(){
+		$flag=1;
+    	$("input").focusout(function(){
+    		if($(this).val()=='' && $(this).attr('data-validation') == 'required'){
+        		$(this).css("border-color", "#FF0000");
+        		$(this).css("backgroundColor", "#bc14494d");
+        			$('#submit').attr('disabled',true);
+        			 $("#error_msg").text("* You have to enter your !");
+        	}
+        	else
+        	{
+        		$(this).css("border-color", "#2eb82e");
+        		$(this).css("backgroundColor", "#FFFFFF");
+        		$('#submit').attr('disabled',false);
+        		$("#error_msg").text("");
+			if($(this).attr('name') == 'admno')
+			{
+				document.getElementById("admno").readOnly=true;
+			 	dbParam=document.getElementById("admno").value;
+    				document.getElementById("admno").value=dbParam;
+    				xmlhttp.open("GET", "dataretrieve.php?admissionno=" + dbParam, true);
+				xmlhttp.send();
+			}
+
+        	}
+       });
+      	
+	$("#reset").click(function(){
+		document.getElementById("admno").readOnly=false;
+	});
+	});
+
+
+</script>
+<!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+<div class="row">
+    <div >
+		<div class="panel panel-primary">
+			<div class="panel-heading">Student details 
+			</div>
+			<div class="panel-body">
+				<form name="myform" action="tcregpdfgen.php" method="POST"	>
+				<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='admno'>ADMN NO</label>
+<input id='admno' name='admno' class='form-control' type='text' data-validation='required'>
+ <span id='error_admno' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='name'>Name of Pupil ( in Block Letters )</label>
+<input id='name' name='name' class='form-control' type='text' data-validation='required'>
+ <span id='error_name' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='department'>Department</label>
+<select id='department' name='department' class='form-control' data-validation='notrequired'>
+<option>Civil Engineering</option>
+<option>Computer Hardware Engineering</option>
+<option>Electronics Engineering</option>
+<option>Electrical and Electronics Engineering</option>
+<option>Instrumentation Engineering</option>
+<option>Mechanical Engineering</option>
+</select>
+ <span id='error_department' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='rollno'>Class Roll no</label>
+<input id='rollno' name='rollno' class='form-control' type='text' data-validation='required'>
+ <span id='error_rollno' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='email'>Email Address</label>
+<input id='email' name='email' class='form-control' type='text' data-validation='required'>
+ <span id='error_email' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='phone'>Mobile Number</label>
+<input id='phone' name='phone' class='form-control' type='text' data-validation='required'>
+ <span id='error_phone' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='guardianname'>Name of Guardian</label>
+<input id='guardianname' name='guardianname' class='form-control' type='text' data-validation='required'>
+ <span id='error_guardianname' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='guardianrelation'>Guardian relationship with pupil</label>
+<select id='guardianrelation' name='guardianrelation' class='form-control' data-validation='notrequired'>
+<option>Father</option>
+<option>Mother</option>
+<option>Uncle</option>
+<option>Husband</option>
+</select>
+ <span id='error_guardianrelation' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='religion'>Religion</label>
+<input id='religion' name='religion' class='form-control' type='text' data-validation='required'>
+ <span id='error_religion' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='community'>Community</label>
+<input id='community' name='community' class='form-control' type='text' data-validation='required'>
+ <span id='error_community' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='Nationality'> Nationality </label>
+<select id='Nationality' name='Nationality' class='form-control' data-validation='notrequired'>
+<option>Indian</option>
+</select>
+ <span id='error_Nationality' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='dob'>Date of Birth according to admission Register ( In figures )</label>
+<input id='dob' name='dob' class='form-control' type='date' data-validation='required'>
+ <span id='error_dob' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='b_promoted'>Whether qualified for promotion to that class</label>
+<select id='b_promoted' name='b_promoted' class='form-control' data-validation='notrequired'>
+<option>Yes</option>
+</select>
+ <span id='error_b_promoted' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='attendance'>No.of working hours the pupil attended</label>
+<input id='attendance' name='attendance' class='form-control' type='text' data-validation='notrequired'>
+ <span id='error_attendance' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='reasonForLeaving'>Reason for leaving the institution</label>
+<select id='reasonForLeaving' name='reasonForLeaving' class='form-control' data-validation='notrequired'>
+<option>Course Completed</option>
+</select>
+ <span id='error_reasonForLeaving' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='yearOfStudy'>Years Of Study</label>
+<select id='yearOfStudy' name='yearOfStudy' class='form-control' data-validation='notrequired'>
+<option>2015-2018</option>
+</select>
+ <span id='error_yearOfStudy' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='lastenrolledClass'>class in which the pupil was last enrolled</label>
+<select id='lastenrolledClass' name='lastenrolledClass' class='form-control' data-validation='notrequired'>
+<option>Final year</option>
+</select>
+ <span id='error_lastenrolledClass' class='text-danger'></span>
+</div>
+<div class='form-group col-xs-10 col-sm-4 col-md-4 col-lg-4'>
+<label for='bFeeconcession'>whether the pupil was in receipt of fee concession</label>
+<select id='bFeeconcession' name='bFeeconcession' class='form-control' data-validation='notrequired'>
+<option>No</option>
+<option>Yes</option>
+</select>
+ <span id='error_bFeeconcession' class='text-danger'></span>
+</div>
+				<div class="form-group col-xs-10" >
+				<label for="address">Address</label>
+					<textarea id="address" placeholder="Address" class="form-control" name="address" rows="2" ></textarea>
+				</div>
+				<div class="form-group  col-xs-10 col-sm-4 col-md-4 col-lg-4" >
+					<span>Download the application </span>
+					<span id="error_msg" class='text-danger'></span>;
+				</div>
+					<div class="col-submit col-xs-12">
+					<button id="submit" type="submit" value="submit" class="btn btn-primary center">Submit</button>
+
+					<button id="reset" type="reset" value="reset" class="btn btn-primary center">Reset</button>
+					</div>
+				</form>
+
+			</div>
+			 <div class="panel-footer">Contact sudevank@gmail.com or 7200668804</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
