@@ -1,6 +1,6 @@
 <?php
 require('code128.php');
-
+#testing
 $pdf=new PDF_Code128();
 $pdf->AddPage();
 $pdf->SetFont('Arial','',10);
